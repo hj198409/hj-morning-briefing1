@@ -192,7 +192,25 @@ CACHE_FILE = "fear_greed_cache.json"
 
 
 def set_korean_font():
-    plt.rcParams["font.family"] = "Malgun Gothic"
+    import os
+    import matplotlib.font_manager as fm
+    import matplotlib.pyplot as plt
+
+    font_paths = [
+        "/usr/share/fonts/truetype/nanum/NanumGothic.ttf",   # Streamlit Cloud
+        "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf",
+        "C:/Windows/Fonts/malgun.ttf",                       # 내 PC
+    ]
+
+    for font_path in font_paths:
+        if os.path.exists(font_path):
+            font_name = fm.FontProperties(fname=font_path).get_name()
+            plt.rcParams["font.family"] = font_name
+            plt.rcParams["axes.unicode_minus"] = False
+            return
+
+    # fallback
+    plt.rcParams["font.family"] = "DejaVu Sans"
     plt.rcParams["axes.unicode_minus"] = False
 
 
