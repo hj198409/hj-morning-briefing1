@@ -95,9 +95,9 @@ st.markdown("""
 # 티커
 # =========================
 tickers = {
-    "S&P500": "^GSPC",
-    "다우": "^DJI",
+    "S&P500": ["^GSPC", "SPY", "^SPX"],  # 🔥 핵심
     "나스닥": "^IXIC",
+    "다우": "^DJI",
     "필라델피아 반도체": "^SOX",
     "미국 10년": "^TNX",
     "미국 2년": "^IRX",
@@ -119,28 +119,45 @@ tickers = {
 @st.cache_data(ttl=600)
 def get_data(ticker):
     try:
-        df = yf.download(ticker, period="1mo", progress=False, auto_adjust=False)
+        # 티커를 리스트로 변환 (단일 / 복수 대응)
+        ticker_list = ticker if isinstance(ticker, list) else [ticker]
 
-        if df is None or df.empty:
-            return None, None
+        for t in ticker_list:
+            try:
+                df = yf.download(
+                    t,
+                    period="1mo",
+                    progress=False,
+                    auto_adjust=False,
+                    threads=False
+                )
 
-        close = df["Close"]
-        if isinstance(close, pd.DataFrame):
-            close = close.iloc[:, 0]
+                if df is None or df.empty:
+                    continue
 
-        close = close.dropna()
-        if len(close) < 2:
-            return None, None
+                close = df["Close"]
 
-        last = float(close.iloc[-1])
-        prev = float(close.iloc[-2])
-        pct = (last - prev) / prev * 100 if prev != 0 else 0
+                if isinstance(close, pd.DataFrame):
+                    close = close.iloc[:, 0]
 
-        return round(last, 2), round(pct, 2)
+                close = close.dropna()
+
+                if len(close) < 2:
+                    continue
+
+                last = float(close.iloc[-1])
+                prev = float(close.iloc[-2])
+                pct = (last - prev) / prev * 100 if prev != 0 else 0
+
+                return round(last, 2), round(pct, 2)
+
+            except Exception:
+                continue
+
+        return None, None
 
     except Exception:
         return None, None
-
 
 def draw_card(name):
     val, pct = get_data(tickers[name])
