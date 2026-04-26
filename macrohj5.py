@@ -443,28 +443,31 @@ def draw_cnn_style_gauge(title, score, label, source_text=""):
     ny = 0.76 * math.sin(needle_angle)
 
     ax.plot([0, nx], [0, ny], color="#222222", linewidth=5, solid_capstyle="round")
-    ax.scatter([0], [0], s=1250, color="#ffffff", zorder=5)
-    ax.scatter([0], [0], s=70, color="#222222", zorder=6)
+    # 중심 흰 원
+    ax.scatter([0], [0], s=900, color="#ffffff", zorder=5)
+    # 바늘 중심점
+    ax.scatter([0], [0], s=45, color="#222222", zorder=6)
 
     value_text = f"{score:.0f}" if score == int(score) else f"{score:.1f}"
 
+# 숫자를 중심점보다 아래에 배치해서 바늘과 겹치지 않게 처리
     ax.text(
-        0,
-        0.04,
-        value_text,
-        ha="center",
-        va="center",
-        fontsize=28,
-        fontweight="bold",
-        color="#111827",
-        zorder=7
+    0,
+    -0.11,
+    value_text,
+    ha="center",
+    va="center",
+    fontsize=28,
+    fontweight="bold",
+    color="#111827",
+    zorder=7
     )
 
     ax.set_title(title, fontsize=24, fontweight="bold", loc="left", pad=10, color="#000000")
     ax.text(-1.0, -0.12, source_text, ha="left", va="center", fontsize=9, color="#6b7280")
 
     ax.set_xlim(-1.05, 1.05)
-    ax.set_ylim(-0.15, 1.12)
+    ax.set_ylim(-0.24, 1.12)
     ax.axis("off")
 
     st.pyplot(fig, use_container_width=True)
