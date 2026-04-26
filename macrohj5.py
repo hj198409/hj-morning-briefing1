@@ -23,61 +23,72 @@ st.set_page_config(page_title="모닝브리핑", layout="wide")
 # =========================
 st.markdown("""
 <style>
-.main {background: linear-gradient(135deg, #e9f5ff 0%, #f6fbff 100%);}
 
-.title-box {text-align:center; margin-bottom:20px;}
-.main-title {font-size:34px; font-weight:900; color:#1f2c3b;}
-.sub-title {font-size:16px; font-weight:700; color:#4a6572;}
+/* 전체 배경 */
+body {
+    background-color: #0b1220;
+}
 
+/* 제목 */
+.main-title {
+    font-size: 34px;
+    font-weight: 900;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+/* 서브 제목 */
+.sub-title {
+    text-align: center;
+    font-size: 18px;
+    color: #9ca3af;
+    margin-bottom: 20px;
+}
+
+/* 카드 */
 .card {
-    background:#ffffff;
-    border-radius:16px;
-    padding:14px;
-    border:1px solid #d9e6f2;
-    box-shadow:0 2px 6px rgba(0,0,0,0.05);
-    margin-bottom:10px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 18px;
+    margin-bottom: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.card-title {font-size:14px; font-weight:800; color:#3b556b;}
-.card-value {font-size:24px; font-weight:900;}
-
-.up {color:#d9463b;}
-.down {color:#2f7ed8;}
-.flat {color:#6c7a89;}
-
-.etf-card {
-    background:#ffffff;
-    border-radius:14px;
-    padding:12px 16px;
-    border:1px solid #d9e6f2;
-    box-shadow:0 2px 6px rgba(0,0,0,0.04);
-    margin-bottom:8px;
+/* 카드 타이틀 */
+.card-title {
+    font-size: 15px;
+    color: #6b7280;
+    font-weight: 700;
 }
 
-.etf-row {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:10px;
+/* 값 */
+.card-value {
+    font-size: 28px;
+    font-weight: 900;
+    margin-top: 6px;
 }
 
-.etf-rank {
-    font-size:12px;
-    color:#8a98a8;
-    font-weight:800;
+/* 상승 */
+.up {
+    color: #e11d48;
 }
 
-.etf-name {
-    font-size:15px;
-    font-weight:900;
-    color:#1f2c3b;
+/* 하락 */
+.down {
+    color: #2563eb;
 }
 
-.etf-rate {
-    font-size:19px;
-    font-weight:900;
-    white-space:nowrap;
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 26px;
+    }
+    .card-value {
+        font-size: 24px;
+    }
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -85,9 +96,11 @@ st.markdown("""
 # 제목
 # =========================
 st.markdown("""
-<div class="title-box">
-    <div class="main-title">📊 유진투자증권 나효정 대리</div>
-    <div class="sub-title">모닝 브리핑</div>
+<div class="main-title">
+📊 유진투자증권 나효정 대리
+</div>
+<div class="sub-title">
+모닝 브리핑
 </div>
 """, unsafe_allow_html=True)
 
